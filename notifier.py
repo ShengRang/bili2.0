@@ -109,6 +109,19 @@ class Notifier:
             except asyncio.CancelledError:
                 print(f'CONFIRMED CANCEL {user} {func}')
                 bili_statistics.cancel_unique_task(user.id, task)
+            except Exception as e:
+                # fucking patch
+                print(f'hotfix_trace {e} {user.name} {task} {func}')
+                print(f'o fuck, let\'s do the patch')
+                bili_statistics.done_unique_task(user.id, task)
+                import traceback
+                traceback.print_exc()
+            finally:
+                pass
+                # I think there is no difference between cancel and done
+                # nobody care about the UniqueTaskChecker::end_time
+                # but still taking a fucking patch to void something trick
+                # bili_statistics.done_unique_task(user.id, task)
         else:
             print(f'重复推送{func} {user.id}（此为debug信息忽略即可）')
         return None
