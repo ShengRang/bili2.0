@@ -129,7 +129,12 @@ class User:
                     await asyncio.shield(self.force_sleep(3600))  # bili_sched.force_sleep
                     await asyncio.sleep(3600)  # 有的function不受sched控制，主动sleep即可，不cancel原因是怕堵死一些协程
             else:
+                import random
+                wid = random.random
+                wl = self._waiting_login
+                print(f'waiting on [{self._waiting_login}] wid: [{wid}] [{wl}, {wl==self._waiting_login}]')
                 await self._waiting_login
+                print(f'finish waiting on [{self._waiting_login}] wid: [{wid}] [{wl}, {wl==self._waiting_login}]')
 
     def fall_in_jail(self):
         self.is_in_jail = True
